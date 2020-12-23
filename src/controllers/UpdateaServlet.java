@@ -51,20 +51,19 @@ public class UpdateaServlet extends HttpServlet {
             if(errors.size() > 0) {
                 em.close();
 
-                request.setAttribute(_token, request.getSession().getId());
+                request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("task", t);
                 request.setAttribute("errors", errors);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
                 rd.forward(request, response);
-            }else {
+            }else{
                 em.getTransaction().begin();
                 em.getTransaction().commit();
                 request.getSession().setAttribute("flush", "更新が完了しました");
                 em.close();
 
                 request.getSession().removeAttribute("task_id");
-
                 response.sendRedirect(request.getContextPath() + "/index");
             }
 

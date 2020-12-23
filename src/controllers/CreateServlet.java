@@ -50,17 +50,16 @@ public class CreateServlet extends HttpServlet {
 
 
             List<String> errors = TaskValidator.validate(t);
-
             if(errors.size() > 0) {
                 em.close();
 
-                request.setAttribute(_token, request.getSession().getId());
+                request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("task", t);
                 request.setAttribute("errors", errors);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
                 rd.forward(request, response);
-            } else {
+            }else{
                 em.getTransaction().begin();
                 em.persist(t);
                 em.getTransaction().commit();
